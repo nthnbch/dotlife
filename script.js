@@ -73,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const birthdateInput = document.getElementById('birthdate');
     const lifespanInput = document.getElementById('lifespan');
     const timeUnitSelect = document.getElementById('timeUnit');
-    const generateButton = document.getElementById('generate');
     const lifeVisualization = document.getElementById('life-visualization');
     const daysLivedElement = document.getElementById('days-lived');
     const daysRemainingElement = document.getElementById('days-remaining');
@@ -96,6 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize the Wikipedia link href
     if (lifeExpectancyLink && translations[storedLanguage]['lifeExpectancyUrl']) {
         lifeExpectancyLink.href = translations[storedLanguage]['lifeExpectancyUrl'];
+        // S'assurer que le lien s'ouvre toujours dans un nouvel onglet
+        lifeExpectancyLink.setAttribute('target', '_blank');
     }
     
     // Set current year in footer
@@ -109,14 +110,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize with default values
     generateLifeVisualization();
     
-    // Event listeners
-    generateButton.addEventListener('click', generateLifeVisualization);
+    // Event listeners - génération automatique à chaque changement
     birthdateInput.addEventListener('change', generateLifeVisualization);
+    birthdateInput.addEventListener('input', generateLifeVisualization);
     timeUnitSelect.addEventListener('change', () => {
         updateSubtitle();
         generateLifeVisualization();
     });
     lifespanInput.addEventListener('change', generateLifeVisualization);
+    lifespanInput.addEventListener('input', generateLifeVisualization);
     
     // Language change event
     languageSelect.addEventListener('change', () => {
@@ -153,6 +155,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Special handling for Wikipedia link
                 if (element.id === 'life-expectancy-link' && translations[language]['lifeExpectancyUrl']) {
                     element.href = translations[language]['lifeExpectancyUrl'];
+                    // S'assurer que le lien s'ouvre toujours dans un nouvel onglet
+                    element.setAttribute('target', '_blank');
                 }
             }
         });
@@ -201,10 +205,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // Calculate units based on selected time unit
-        const { totalUnits, unitsLived, unitsRemaining, unitNames } = calculateUnits(birthdate, lifespan, timeUnit, language);
+        const { totalUnits, unitsLived, unitsRemaining, unitNames, isDeceased } = calculateUnits(birthdate, lifespan, timeUnit, language);
         
         // Calculate life percentage
-        const lifePercentage = Math.min(100, Math.floor((unitsLived / totalUnits) * 100));
+        const lifePercentage = isDeceased ? 100 : Math.min(100, Math.floor((unitsLived / totalUnits) * 100));
         
         // Update stats with appropriate unit names
         daysLivedElement.textContent = unitsLived.toLocaleString();
@@ -225,13 +229,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clear previous visualization
         lifeVisualization.innerHTML = '';
         
+        // Ajouter une classe si la personne est décédée selon les dates
+        if (isDeceased) {
+            lifeVisualization.classList.add('deceased');
+        } else {
+            lifeVisualization.classList.remove('deceased');
+        }
+        
         // Determine optimal grid layout based on screen size
         const containerWidth = lifeVisualization.clientWidth;
         // Get the width of the controls element for reference
         const controlsElement = document.querySelector('.controls');
         const controlsWidth = controlsElement ? controlsElement.clientWidth : containerWidth;
-        // Calculate reduced width (approximately aligned with the red lines in the user's drawing)
-        const desiredWidth = Math.min(controlsWidth * 0.6, 700); // 60% de la largeur du menu, maximum 700px
+        // Calculate width to match controls width but with a maximum of 700px
+        const desiredWidth = Math.min(controlsWidth * 0.9, 700); // 90% de la largeur du menu, maximum 700px
         
         const dotSize = containerWidth <= 480 ? 4 : containerWidth <= 768 ? 5 : 6; // Points plus petits
         const dotGap = containerWidth <= 480 ? 1 : 2; // Espacement réduit
@@ -327,7 +338,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // Déterminer l'état du point
             if (i < unitsLived) {
                 dot.classList.add('lived');
-            } else if (i === unitsLived) {
+                
+                // Si la personne est décédée et c'est le dernier point vécu, ajouter la tête de mort
+                if (isDeceased && i === unitsLived - 1) {
+                    dot.classList.add('death');
+                    dot.innerHTML = '💀';
+                    dot.title = lang === 'fr' ? 'Date de décès' : 'Date of death';
+                }
+            } else if (i === unitsLived && !isDeceased) {
                 dot.classList.add('today');
                 
                 // Ajouter un indicateur spécial pour le point actuel
@@ -338,8 +356,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Améliorer l'accessibilité
                 dot.setAttribute('aria-current', 'true');
-            } else if (i === totalUnits - 1) {
-                // Ajouter une tête de mort pour le dernier point (point de la mort)
+            } else if (i === totalUnits - 1 && !isDeceased) {
+                // Ajouter une tête de mort pour le dernier point (point de la mort) - seulement si la personne n'est pas décédée
                 dot.classList.add('death');
                 dot.innerHTML = '💀';
                 dot.title = lang === 'fr' ? 'Fin de vie estimée' : 'Estimated end of life';
@@ -439,7 +457,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Calcul de l'espérance de vie en jours
         const lifespanDays = lifespan * DAYS_PER_YEAR;
-        const daysRemaining = Math.max(0, Math.floor(lifespanDays - daysLived));
+        
+        // Vérifier si la personne est déjà décédée selon les dates
+        const deathDate = new Date(birthdate);
+        deathDate.setFullYear(birthdate.getFullYear() + lifespan);
+        const isDeceased = deathDate < today;
+        
+        const daysRemaining = isDeceased ? 0 : Math.max(0, Math.floor(lifespanDays - daysLived));
         
         // Optimisation: utilisation d'un objet pour mapper les unités
         const unitFactors = {
@@ -452,8 +476,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Calculer les unités en fonction de l'unité temporelle sélectionnée
         const factor = unitFactors[timeUnit];
         const totalUnits = Math.ceil(lifespanDays / factor);
-        const unitsLived = Math.floor(daysLived / factor);
-        const unitsRemaining = Math.floor(daysRemaining / factor);
+        const unitsLived = isDeceased ? totalUnits : Math.floor(daysLived / factor);
+        const unitsRemaining = isDeceased ? 0 : Math.floor(daysRemaining / factor);
         
         // Optimisation: stockage des noms d'unités dans un objet
         const language = lang || 'fr';
@@ -476,7 +500,8 @@ document.addEventListener('DOMContentLoaded', () => {
             totalUnits,
             unitsLived,
             unitsRemaining,
-            unitNames: unitLabels[language][timeUnit]
+            unitNames: unitLabels[language][timeUnit],
+            isDeceased
         };
     }
     

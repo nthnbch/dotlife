@@ -159,11 +159,23 @@ h1 {
     background-color: var(--light-gray);
     border-radius: 8px;
     transition: background-color 0.3s;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
 }
 
 .control-group {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-width: 160px;
+}
+
+.input-with-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 label {
@@ -178,6 +190,8 @@ input, select {
     border-radius: 4px;
     font-family: var(--font-family);
     font-size: 1rem;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 input:focus, select:focus {
@@ -185,11 +199,25 @@ input:focus, select:focus {
     border-color: var(--accent-color);
 }
 
+/* Assurer que les input sont correctement stylisés en dark mode */
+[data-theme="dark"] input {
+    background-color: var(--light-gray);
+    border-color: var(--border-color);
+}
+
 select {
     background-color: var(--background-color);
     color: var(--text-color);
     cursor: pointer;
     appearance: auto;
+    border-color: var(--border-color);
+}
+
+/* Assurer que le select fonctionne correctement en dark mode */
+[data-theme="dark"] select {
+    background-color: var(--light-gray);
+    color: var(--text-color);
+    border-color: var(--border-color);
 }
 
 .btn {
@@ -273,6 +301,11 @@ select {
     z-index: 2; /* Apparaître au-dessus des autres points */
     transform: scale(1.2); /* Légèrement plus grand par défaut */
     animation: pulse-skull 2s infinite ease-in-out; /* Animation de pulsation pour la tête de mort */
+}
+
+/* Style spécifique pour le cas où la personne est décédée */
+.deceased .dot.lived {
+    opacity: 0.6; /* Réduire l'opacité pour les points de vie passée */
 }
 
 /* Ajuster la taille de l'emoji selon la taille de l'écran */
