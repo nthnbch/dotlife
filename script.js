@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
             daysRemaining: "Jours restants",
             lifePercentage: "Pourcentage de vie",
             createdWith: "Créé avec",
+            by: "par",
             copyright: "Tous droits réservés",
             dayUnit: "jour",
             weekUnit: "semaine",
@@ -47,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             daysRemaining: "Days remaining",
             lifePercentage: "Life percentage",
             createdWith: "Created with",
+            by: "by",
             copyright: "All rights reserved",
             dayUnit: "day",
             weekUnit: "week",
@@ -80,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             daysRemaining: "Días restantes",
             lifePercentage: "Porcentaje de vida",
             createdWith: "Creado con",
+            by: "por",
             copyright: "Todos los derechos reservados",
             dayUnit: "día",
             weekUnit: "semana",
@@ -113,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             daysRemaining: "Dias restantes",
             lifePercentage: "Percentagem de vida",
             createdWith: "Criado com",
+            by: "por",
             copyright: "Todos os direitos reservados",
             dayUnit: "dia",
             weekUnit: "semana",
@@ -146,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
             daysRemaining: "Giorni rimanenti",
             lifePercentage: "Percentuale di vita",
             createdWith: "Creato con",
+            by: "da",
             copyright: "Tutti i diritti riservati",
             dayUnit: "giorno",
             weekUnit: "settimana",
@@ -176,7 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const daysLivedElement = document.getElementById('days-lived');
     const daysRemainingElement = document.getElementById('days-remaining');
     const lifePercentageElement = document.getElementById('life-percentage');
-    const currentYearElement = document.getElementById('current-year');
     const subtitleElement = document.getElementById('subtitle');
     const languageSelect = document.getElementById('language');
     const darkModeToggle = document.getElementById('darkModeToggle');
@@ -197,9 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // S'assurer que le lien s'ouvre toujours dans un nouvel onglet
         lifeExpectancyLink.setAttribute('target', '_blank');
     }
-    
-    // Set current year in footer
-    currentYearElement.textContent = new Date().getFullYear();
     
     // Set default birthdate to 05.09.1988
     const today = new Date();
@@ -388,6 +389,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const srLabel = document.createElement('div');
         srLabel.className = 'sr-only';
         
+        // Utiliser la variable language qui est déjà définie plus haut dans la fonction
+        const currentLang = language; // On utilise la variable language définie à la ligne 296
+        
         // Texte pour les lecteurs d'écran selon la langue
         const srTexts = {
             'fr': `Visualisation de ${totalUnits} ${unitNames.name}s, représentant ${lifespan} années de vie.`,
@@ -397,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'it': `Visualizzazione di ${totalUnits} ${unitNames.name}s, rappresentante ${lifespan} anni di vita.`
         };
         
-        srLabel.textContent = srTexts[lang] || srTexts['fr'];
+        srLabel.textContent = srTexts[currentLang] || srTexts['fr'];
         lifeVisualization.appendChild(srLabel);
         
         // Calculer le nombre de rangées nécessaires
@@ -414,7 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lifeVisualization.style.margin = '0 auto'; // Centrer la visualisation
         
         // Optimisation: Précalculer les labels d'unités
-        const lang = languageSelect.value;
+        // On réutilise currentLang qui est défini plus haut
         const unitLabels = {
             fr: { day: "", week: "Semaine", month: "Mois", year: "Année" },
             en: { day: "", week: "Week", month: "Month", year: "Year" },
@@ -461,7 +465,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (isDeceased && i === unitsLived - 1) {
                     dot.classList.add('death');
                     dot.innerHTML = '💀';
-                    dot.title = lang === 'fr' ? 'Date de décès' : 'Date of death';
+                    
+                    // Utiliser la variable language plutôt que lang
+                    const deathTitles = {
+                        'fr': 'Date de décès',
+                        'en': 'Date of death',
+                        'es': 'Fecha de defunción',
+                        'pt': 'Data de óbito',
+                        'it': 'Data di morte'
+                    };
+                    dot.title = deathTitles[language] || deathTitles['fr'];
                 }
             } else if (i === unitsLived && !isDeceased) {
                 dot.classList.add('today');
@@ -469,7 +482,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Ajouter un indicateur spécial pour le point actuel
                 const currentDot = document.createElement('span');
                 currentDot.className = 'sr-only';
-                currentDot.textContent = lang === 'fr' ? 'Aujourd\'hui' : 'Today';
+                
+                // Utiliser la variable language plutôt que lang
+                const todayLabels = {
+                    'fr': 'Aujourd\'hui',
+                    'en': 'Today',
+                    'es': 'Hoy',
+                    'pt': 'Hoje',
+                    'it': 'Oggi'
+                };
+                currentDot.textContent = todayLabels[language] || todayLabels['fr'];
                 dot.appendChild(currentDot);
                 
                 // Améliorer l'accessibilité
@@ -478,7 +500,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Ajouter une tête de mort pour le dernier point (point de la mort) - seulement si la personne n'est pas décédée
                 dot.classList.add('death');
                 dot.innerHTML = '💀';
-                dot.title = lang === 'fr' ? 'Fin de vie estimée' : 'Estimated end of life';
+                
+                // Utiliser la variable language plutôt que lang
+                const endOfLifeTitles = {
+                    'fr': 'Fin de vie estimée',
+                    'en': 'Estimated end of life',
+                    'es': 'Fin de vida estimada',
+                    'pt': 'Fim de vida estimado',
+                    'it': 'Fine vita stimata'
+                };
+                dot.title = endOfLifeTitles[language] || endOfLifeTitles['fr'];
             }
             
             // Calculer la position
@@ -505,14 +536,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // Calculer la date et les métadonnées
             const dotDate = calculateDotDate(i);
             const formattedDate = formatDate(dotDate);
-            const displayDate = formatDateForDisplay(dotDate, lang);
+            const displayDate = formatDateForDisplay(dotDate, language);
             
             // Ajouter le titre descriptif
             let title;
             if (timeUnit === 'day') {
                 title = `${displayDate}`;
             } else {
-                title = `${unitLabels[lang][timeUnit]} ${i+1}: ${displayDate}`;
+                title = `${unitLabels[language][timeUnit]} ${i+1}: ${displayDate}`;
             }
             
             // Définir les attributs
@@ -556,8 +587,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         it: { day: "GIORNO", week: "SETTIMANA", month: "MESE", year: "ANNO" }
                     };
                     
-                    const currentLabel = currentLabels[lang] || currentLabels['fr'];
-                    const unitLabel = unitLabelsUpper[lang]?.[timeUnit] || unitLabelsUpper['fr'][timeUnit];
+                    const currentLabel = currentLabels[language] || currentLabels['fr'];
+                    const unitLabel = unitLabelsUpper[language]?.[timeUnit] || unitLabelsUpper['fr'][timeUnit];
                     
                     alert(`🔴 ${currentLabel} - ${unitLabel} ${index+1}\n${title}`);
                 } else {
