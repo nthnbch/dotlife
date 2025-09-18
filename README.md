@@ -26,6 +26,4 @@ DotLife est une visualisation minimaliste de la vie humaine, représentée sous 
 - JavaScript (Vanilla)
 - Conception responsive pour tous les appareils
 
-## License
-
-© [nathan.swiss](https://nathan.swiss)
+Idée de base: [nathan.swiss](https://nathan.swiss)
