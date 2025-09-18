@@ -1,0 +1,487 @@
+:root {
+    /* Light mode (default) */
+    --primary-color: #1a1a1a;
+    --background-color: #ffffff;
+    --accent-color: #3498db;
+    --light-gray: #f5f5f5;
+    --medium-gray: #e0e0e0;
+    --dark-gray: #888888;
+    --dot-color: #1a1a1a;
+    --dot-lived: #3498db;
+    --dot-today: #e74c3c;
+    --text-color: #333333;
+    --card-bg: #ffffff;
+    --border-color: #e0e0e0;
+    --font-family: 'Inter', sans-serif;
+}
+
+/* Dark mode */
+[data-theme="dark"] {
+    --primary-color: #f5f5f5;
+    --background-color: #121212;
+    --accent-color: #64b5f6;
+    --light-gray: #2a2a2a;
+    --medium-gray: #3a3a3a;
+    --dark-gray: #aaaaaa;
+    --dot-color: #f5f5f5;
+    --dot-lived: #64b5f6;
+    --dot-today: #e57373;
+    --text-color: #f5f5f5;
+    --card-bg: #1e1e1e;
+    --border-color: #333333;
+}
+
+/* Screen reader only class - for accessibility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 2rem 0;
+    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.settings {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.setting-group {
+    display: flex;
+    align-items: center;
+}
+
+.setting-control {
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    background-color: var(--light-gray);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.setting-control:hover {
+    background-color: var(--medium-gray);
+}
+
+#darkModeToggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 34px;
+    padding: 0;
+}
+
+.mode-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+[data-theme="dark"] .light-icon {
+    display: none;
+}
+
+[data-theme="light"] .dark-icon {
+    display: none;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--dark-gray);
+    font-weight: 300;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 1.5rem;
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    color: var(--primary-color);
+}
+
+input, select {
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--medium-gray);
+    border-radius: 4px;
+    font-family: var(--font-family);
+    font-size: 1rem;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+select {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    cursor: pointer;
+    appearance: auto;
+}
+
+.btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+.life-container {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow: visible; /* Permettre au contenu de déborder si nécessaire */
+    padding: 0;
+    min-height: 200px; /* Hauteur minimale pour accueillir plusieurs lignes */
+}
+
+.life-visualization {
+    position: relative;
+    width: 100%;
+    overflow: visible; /* Afficher tout le contenu sans défilement */
+    padding: 10px 5px; /* Ajouter un peu d'espace autour des points */
+    box-sizing: border-box; /* S'assurer que le padding est inclus dans la largeur */
+    margin-bottom: 2rem; /* Espace en bas pour éviter de toucher les stats */
+    min-height: 100px; /* Hauteur minimale pour éviter le collapse */
+}
+
+/* Optimiser les transitions pour utiliser des propriétés plus performantes */
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--medium-gray);
+    transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+    will-change: transform, opacity; /* Indique au navigateur de préparer ces propriétés pour l'animation */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6px;
+}
+
+.dot:hover {
+    transform: scale(1.8);
+    z-index: 2; /* Assurer que le point survolé apparaît au-dessus des autres */
+}
+
+.dot.lived {
+    background-color: var(--dot-lived);
+}
+
+.dot.today {
+    background-color: var(--dot-today);
+    animation: pulse 1s infinite ease-in-out;
+    will-change: transform, opacity;
+    z-index: 3; /* Plus élevé que les points normaux au survol */
+}
+
+.dot.today:hover {
+    animation-play-state: paused;
+    transform: scale(2);
+}
+
+/* Style pour le point de mort */
+.dot.death {
+    background-color: transparent; /* Rendre le fond transparent */
+    font-size: 10px; /* Taille de base de l'emoji */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2; /* Apparaître au-dessus des autres points */
+    transform: scale(1.2); /* Légèrement plus grand par défaut */
+    animation: pulse-skull 2s infinite ease-in-out; /* Animation de pulsation pour la tête de mort */
+}
+
+/* Ajuster la taille de l'emoji selon la taille de l'écran */
+@media (max-width: 768px) {
+    .dot.death {
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dot.death {
+        font-size: 6px;
+    }
+}
+
+.dot.death:hover {
+    transform: scale(2);
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.5)); /* Ajouter une ombre pour un meilleur contraste */
+    animation-play-state: paused; /* Mettre en pause l'animation au survol */
+}
+
+/* Animation spécifique pour la tête de mort */
+@keyframes pulse-skull {
+    0% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.8);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(2.2);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Pour le thème sombre, ajustons la couleur de l'animation */
+[data-theme="dark"] .dot.today {
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-dark {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--light-gray);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.stat-box:hover {
+    transform: translateY(-5px);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--dark-gray);
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+footer {
+    text-align: center;
+    margin-top: 4rem;
+    color: var(--dark-gray);
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+footer a:hover {
+    text-decoration: underline;
+    color: #2980b9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem 0;
+    }
+    
+    .container {
+        padding: 0 1rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    
+    .life-visualization {
+        grid-template-columns: repeat(auto-fill, minmax(8px, 1fr));
+        gap: 2px;
+    }
+    
+    .dot {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .stats {
+        gap: 1.5rem;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .life-visualization {
+        grid-template-columns: repeat(auto-fill, minmax(6px, 1fr));
+        gap: 2px;
+    }
+    
+    .dot {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .stat-value {
+        font-size: 1.3rem;
+    }
+    
+    .stats {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .stat-box {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+        background-color: var(--light-gray);
+        border-radius: 4px;
+    }
+}
+
+/* For super small screens */
+@media (max-width: 350px) {
+    .control-group {
+        width: 100%;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}

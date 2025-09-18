@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DotLife - Visualisez votre vie en points</title>
+    <meta name="description" content="Une représentation minimaliste de la vie humaine sous forme de points, où chaque point représente un jour.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/favicon.svg">
+    
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="DotLife - Visualisez votre vie en points">
+    <meta property="og:description" content="Une représentation minimaliste de la vie humaine sous forme de points, où chaque point représente un jour.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/favicon.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DotLife">
+    <meta name="twitter:description" content="Visualisez votre vie en points, où chaque point représente un jour.">
+    
+    <!-- Theme Color for Browser -->
+    <meta name="theme-color" content="#3498db">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="settings">
+                <div class="setting-group">
+                    <select id="language" class="setting-control">
+                        <option value="fr" selected>Français</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <button id="darkModeToggle" class="setting-control" aria-label="Toggle dark mode">
+                        <span class="mode-icon light-icon">☀️</span>
+                        <span class="mode-icon dark-icon">🌙</span>
+                    </button>
+                </div>
+            </div>
+            <h1>DotLife</h1>
+            <p id="subtitle" class="subtitle">Chaque point représente un jour de votre vie.</p>
+        </header>
+        
+        <main>
+            <div class="controls">
+                <div class="control-group">
+                    <label for="birthdate" data-lang="birthdate">Date de naissance</label>
+                    <input type="date" id="birthdate" name="birthdate">
+                </div>
+                <div class="control-group">
+                    <label for="timeUnit" data-lang="timeUnit">Unité temporelle</label>
+                    <select id="timeUnit" name="timeUnit">
+                        <option value="day" data-lang="days">Jours</option>
+                        <option value="week" data-lang="weeks" selected>Semaines</option>
+                        <option value="month" data-lang="months">Mois</option>
+                        <option value="year" data-lang="years">Années</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="lifespan" data-lang="lifespan">Espérance de vie (années)</label>
+                    <input type="number" id="lifespan" name="lifespan" min="1" max="120" value="88">
+                </div>
+                <button id="generate" class="btn" data-lang="generate">Générer</button>
+            </div>
+            
+            <div class="life-container">
+                <div id="life-visualization" class="life-visualization"></div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <span class="stat-label" data-lang="daysLived">Jours vécus</span>
+                    <span id="days-lived" class="stat-value">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label" data-lang="daysRemaining">Jours restants</span>
+                    <span id="days-remaining" class="stat-value">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label" data-lang="lifePercentage">Pourcentage de vie</span>
+                    <span id="life-percentage" class="stat-value">0%</span>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>
+                <span data-lang="createdWith">Créé avec</span> ❤️ | 
+                <span id="current-year"></span> © <span data-lang="copyright">Tous droits réservés</span> |
+                <a href="#" id="life-expectancy-link" data-lang="lifeExpectancyList">Liste des espérances de vie par pays</a>
+            </p>
+        </footer>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
