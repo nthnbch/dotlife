@@ -66,6 +66,105 @@ document.addEventListener('DOMContentLoaded', () => {
             weeksRemaining: "Weeks remaining",
             yearsLived: "Years lived",
             yearsRemaining: "Years remaining"
+        },
+        es: {
+            birthdate: "Fecha de nacimiento",
+            timeUnit: "Unidad de tiempo",
+            days: "Días",
+            weeks: "Semanas",
+            months: "Meses",
+            years: "Años",
+            lifespan: "Esperanza de vida (años)",
+            generate: "Generar",
+            daysLived: "Días vividos",
+            daysRemaining: "Días restantes",
+            lifePercentage: "Porcentaje de vida",
+            createdWith: "Creado con",
+            copyright: "Todos los derechos reservados",
+            dayUnit: "día",
+            weekUnit: "semana",
+            monthUnit: "mes",
+            yearUnit: "año",
+            dayPoint: "Cada punto representa un día de tu vida.",
+            weekPoint: "Cada punto representa una semana de tu vida.",
+            monthPoint: "Cada punto representa un mes de tu vida.",
+            yearPoint: "Cada punto representa un año de tu vida.",
+            today: "Hoy",
+            death: "Fin de vida estimado",
+            monthsLived: "Meses vividos",
+            monthsRemaining: "Meses restantes",
+            weeksLived: "Semanas vividas",
+            weeksRemaining: "Semanas restantes",
+            yearsLived: "Años vividos",
+            yearsRemaining: "Años restantes",
+            lifeExpectancyList: "Lista de países por esperanza de vida",
+            lifeExpectancyUrl: "https://es.wikipedia.org/wiki/Anexo:Países_por_esperanza_de_vida"
+        },
+        pt: {
+            birthdate: "Data de nascimento",
+            timeUnit: "Unidade de tempo",
+            days: "Dias",
+            weeks: "Semanas",
+            months: "Meses",
+            years: "Anos",
+            lifespan: "Expectativa de vida (anos)",
+            generate: "Gerar",
+            daysLived: "Dias vividos",
+            daysRemaining: "Dias restantes",
+            lifePercentage: "Percentagem de vida",
+            createdWith: "Criado com",
+            copyright: "Todos os direitos reservados",
+            dayUnit: "dia",
+            weekUnit: "semana",
+            monthUnit: "mês",
+            yearUnit: "ano",
+            dayPoint: "Cada ponto representa um dia da sua vida.",
+            weekPoint: "Cada ponto representa uma semana da sua vida.",
+            monthPoint: "Cada ponto representa um mês da sua vida.",
+            yearPoint: "Cada ponto representa um ano da sua vida.",
+            today: "Hoje",
+            death: "Fim de vida estimado",
+            monthsLived: "Meses vividos",
+            monthsRemaining: "Meses restantes",
+            weeksLived: "Semanas vividas",
+            weeksRemaining: "Semanas restantes",
+            yearsLived: "Anos vividos",
+            yearsRemaining: "Anos restantes",
+            lifeExpectancyList: "Lista de países por expectativa de vida",
+            lifeExpectancyUrl: "https://pt.wikipedia.org/wiki/Lista_de_países_por_expectativa_de_vida"
+        },
+        it: {
+            birthdate: "Data di nascita",
+            timeUnit: "Unità di tempo",
+            days: "Giorni",
+            weeks: "Settimane",
+            months: "Mesi",
+            years: "Anni",
+            lifespan: "Aspettativa di vita (anni)",
+            generate: "Generare",
+            daysLived: "Giorni vissuti",
+            daysRemaining: "Giorni rimanenti",
+            lifePercentage: "Percentuale di vita",
+            createdWith: "Creato con",
+            copyright: "Tutti i diritti riservati",
+            dayUnit: "giorno",
+            weekUnit: "settimana",
+            monthUnit: "mese",
+            yearUnit: "anno",
+            dayPoint: "Ogni punto rappresenta un giorno della tua vita.",
+            weekPoint: "Ogni punto rappresenta una settimana della tua vita.",
+            monthPoint: "Ogni punto rappresenta un mese della tua vita.",
+            yearPoint: "Ogni punto rappresenta un anno della tua vita.",
+            today: "Oggi",
+            death: "Fine della vita stimata",
+            monthsLived: "Mesi vissuti",
+            monthsRemaining: "Mesi rimanenti",
+            weeksLived: "Settimane vissute",
+            weeksRemaining: "Settimane rimanenti",
+            yearsLived: "Anni vissuti",
+            yearsRemaining: "Anni rimanenti",
+            lifeExpectancyList: "Elenco di paesi per aspettativa di vita",
+            lifeExpectancyUrl: "https://it.wikipedia.org/wiki/Stati_per_aspettativa_di_vita"
         }
     };
     
@@ -197,9 +296,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const language = languageSelect.value;
         
         if (isNaN(birthdate.getTime()) || isNaN(lifespan)) {
-            const errorMsg = language === 'fr' 
-                ? 'Veuillez entrer une date de naissance et une espérance de vie valides.' 
-                : 'Please enter a valid birth date and life expectancy.';
+            const errorMessages = {
+                'fr': 'Veuillez entrer une date de naissance et une espérance de vie valides.',
+                'en': 'Please enter a valid birth date and life expectancy.',
+                'es': 'Por favor, introduzca una fecha de nacimiento y una esperanza de vida válidas.',
+                'pt': 'Por favor, insira uma data de nascimento e uma expectativa de vida válidas.',
+                'it': 'Si prega di inserire una data di nascita e un\'aspettativa di vita valide.'
+            };
+            
+            const errorMsg = errorMessages[language] || errorMessages['fr'];
             alert(errorMsg);
             return;
         }
@@ -282,7 +387,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add a visible label for screen readers
         const srLabel = document.createElement('div');
         srLabel.className = 'sr-only';
-        srLabel.textContent = `Visualisation de ${totalUnits} ${unitNames.name}s, représentant ${lifespan} années de vie.`;
+        
+        // Texte pour les lecteurs d'écran selon la langue
+        const srTexts = {
+            'fr': `Visualisation de ${totalUnits} ${unitNames.name}s, représentant ${lifespan} années de vie.`,
+            'en': `Visualization of ${totalUnits} ${unitNames.name}s, representing ${lifespan} years of life.`,
+            'es': `Visualización de ${totalUnits} ${unitNames.name}s, representando ${lifespan} años de vida.`,
+            'pt': `Visualização de ${totalUnits} ${unitNames.name}s, representando ${lifespan} anos de vida.`,
+            'it': `Visualizzazione di ${totalUnits} ${unitNames.name}s, rappresentante ${lifespan} anni di vita.`
+        };
+        
+        srLabel.textContent = srTexts[lang] || srTexts['fr'];
         lifeVisualization.appendChild(srLabel);
         
         // Calculer le nombre de rangées nécessaires
@@ -302,7 +417,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const lang = languageSelect.value;
         const unitLabels = {
             fr: { day: "", week: "Semaine", month: "Mois", year: "Année" },
-            en: { day: "", week: "Week", month: "Month", year: "Year" }
+            en: { day: "", week: "Week", month: "Month", year: "Year" },
+            es: { day: "", week: "Semana", month: "Mes", year: "Año" },
+            pt: { day: "", week: "Semana", month: "Mês", year: "Ano" },
+            it: { day: "", week: "Settimana", month: "Mese", year: "Anno" }
         };
         
         // Créer une fonction pour calculer les dates
@@ -422,13 +540,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Si c'est le point actuel, ajouter une indication spéciale
                 if (dot.classList.contains('today')) {
-                    const currentLabel = lang === 'fr' ? "AUJOURD'HUI" : "TODAY";
-                    const unitLabelsUpper = {
-                        fr: { day: "JOUR", week: "SEMAINE", month: "MOIS", year: "ANNÉE" },
-                        en: { day: "DAY", week: "WEEK", month: "MONTH", year: "YEAR" }
+                    const currentLabels = {
+                        'fr': "AUJOURD'HUI",
+                        'en': "TODAY",
+                        'es': "HOY",
+                        'pt': "HOJE",
+                        'it': "OGGI"
                     };
                     
-                    alert(`🔴 ${currentLabel} - ${unitLabelsUpper[lang][timeUnit]} ${index+1}\n${title}`);
+                    const unitLabelsUpper = {
+                        fr: { day: "JOUR", week: "SEMAINE", month: "MOIS", year: "ANNÉE" },
+                        en: { day: "DAY", week: "WEEK", month: "MONTH", year: "YEAR" },
+                        es: { day: "DÍA", week: "SEMANA", month: "MES", year: "AÑO" },
+                        pt: { day: "DIA", week: "SEMANA", month: "MÊS", year: "ANO" },
+                        it: { day: "GIORNO", week: "SETTIMANA", month: "MESE", year: "ANNO" }
+                    };
+                    
+                    const currentLabel = currentLabels[lang] || currentLabels['fr'];
+                    const unitLabel = unitLabelsUpper[lang]?.[timeUnit] || unitLabelsUpper['fr'][timeUnit];
+                    
+                    alert(`🔴 ${currentLabel} - ${unitLabel} ${index+1}\n${title}`);
                 } else {
                     alert(title);
                 }
@@ -493,6 +624,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 week: { name: 'week', capitalizedName: 'Week' },
                 month: { name: 'month', capitalizedName: 'Month' },
                 year: { name: 'year', capitalizedName: 'Year' }
+            },
+            es: {
+                day: { name: 'día', capitalizedName: 'Día' },
+                week: { name: 'semana', capitalizedName: 'Semana' },
+                month: { name: 'mes', capitalizedName: 'Mes' },
+                year: { name: 'año', capitalizedName: 'Año' }
+            },
+            pt: {
+                day: { name: 'dia', capitalizedName: 'Dia' },
+                week: { name: 'semana', capitalizedName: 'Semana' },
+                month: { name: 'mês', capitalizedName: 'Mês' },
+                year: { name: 'ano', capitalizedName: 'Ano' }
+            },
+            it: {
+                day: { name: 'giorno', capitalizedName: 'Giorno' },
+                week: { name: 'settimana', capitalizedName: 'Settimana' },
+                month: { name: 'mese', capitalizedName: 'Mese' },
+                year: { name: 'anno', capitalizedName: 'Anno' }
             }
         };
         
@@ -522,7 +671,17 @@ document.addEventListener('DOMContentLoaded', () => {
             month: 'long', 
             day: 'numeric' 
         };
-        const locale = lang === 'en' ? 'en-US' : 'fr-FR';
+        
+        // Map des locales pour chaque langue
+        const locales = {
+            'en': 'en-US',
+            'fr': 'fr-FR',
+            'es': 'es-ES',
+            'pt': 'pt-PT',
+            'it': 'it-IT'
+        };
+        
+        const locale = locales[lang] || 'fr-FR';
         return date.toLocaleDateString(locale, options);
     }
 });

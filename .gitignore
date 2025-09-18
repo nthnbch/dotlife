@@ -1,0 +1,50 @@
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environnements de développement et éditeurs
+.idea/
+.vscode/
+.vs/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# Modules et dépendances
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+package-lock.json
+yarn.lock
+composer.lock
+
+# Fichiers de build et de distribution
+/dist/
+/build/
+/out/
+/.next/
+/coverage/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environnement et configuration
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Fichiers temporaires et caches
+.cache/
+.temp/
+tmp/
+.sass-cache/
