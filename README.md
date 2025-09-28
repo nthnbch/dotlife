@@ -18,7 +18,7 @@ DotLife est une visualisation minimaliste de la vie humaine, représentée sous 
 
 DotLife est une application web statique qui ne nécessite pas de serveur backend :
 
-1. Clonez ce dépôt : `git clone https://github.com/votre-nom/dotlife.git`
+1. Clonez ce dépôt : `git clone https://github.com/nthnbch/dotlife.git`
 2. Ouvrez `index.html` dans votre navigateur pour un test local
 3. Pour déployer, copiez simplement les fichiers sur votre serveur web ou hébergement statique
 
@@ -56,7 +56,3 @@ DotLife est facile à personnaliser :
 ## Crédit
 
 © [nathan.swiss](https://nathan.swiss)
-
----
-
-_"La vie, ce n'est pas d'attendre que les orages passent, c'est d'apprendre à danser sous la pluie." - Sénèque_
