@@ -6,6 +6,8 @@ Test the application here: [dotlife.nathan.swiss](https://dotlife.nathan.swiss)
 
 ![Preview](./preview.png)
 
+**Version: 1.0.2**
+
 ## About
 
 DotLife is a minimalist visualization of human life, represented as dots. Each dot corresponds to a unit of time (day, week, month, or year) of your life, allowing you to become aware of the time elapsed and remaining.
