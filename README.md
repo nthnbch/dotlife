@@ -1,58 +1,57 @@
 # DotLife
 
-## À propos
+## Demo
 
-DotLife est une visualisation minimaliste de la vie humaine, représentée sous forme de points. Chaque point correspond à une unité de temps (jour, semaine, mois ou année) de votre vie, vous permettant de prendre conscience du temps écoulé et restant.
+Test the application here: [dotlife.nathan.swiss](https://dotlife.nathan.swiss)
 
-## Fonctionnalités
+![Preview](./preview.png)
 
-- **Visualisation du temps écoulé** : Affichez visuellement votre vie en fonction de votre date de naissance et de l'espérance de vie estimée
-- **Plusieurs unités de temps** : Choisissez entre les jours, semaines, mois ou années
-- **Statistiques en temps réel** : Consultez le nombre d'unités vécues, restantes et le pourcentage de vie
-- **Multi-langues** : Interface disponible en français, anglais, espagnol, portugais et italien
-- **Mode sombre/clair** : Adaptez l'interface à votre préférence visuelle
-- **Responsive** : Fonctionne sur tous les appareils, du mobile au desktop
-- **Sans dépendances** : Application légère sans bibliothèques externes
+## About
 
-## Installation et déploiement
+DotLife is a minimalist visualization of human life, represented as dots. Each dot corresponds to a unit of time (day, week, month, or year) of your life, allowing you to become aware of the time elapsed and remaining.
 
-DotLife est une application web statique qui ne nécessite pas de serveur backend :
+## Features
 
-1. Clonez ce dépôt : `git clone https://github.com/nthnbch/dotlife.git`
-2. Ouvrez `index.html` dans votre navigateur pour un test local
-3. Pour déployer, copiez simplement les fichiers sur votre serveur web ou hébergement statique
+- **Visualization of elapsed time**: Visually display your life based on your date of birth and estimated life expectancy
+- **Multiple time units**: Choose between days, weeks, months, or years
+- **Real-time statistics**: View the number of units lived, remaining, and the percentage of life
+- **Multi-language support**: Interface available in French, English, Spanish, Portuguese, and Italian
+- **Dark/Light mode**: Adapt the interface to your visual preference
+- **Responsive design**: Works on all devices, from mobile to desktop
+- **No dependencies**: Lightweight application without external libraries
 
-Compatibilité : Tous les navigateurs modernes (Chrome, Firefox, Safari, Edge)
+## Installation and Deployment
 
-## Comment l'utiliser
+DotLife is a static web application that does not require a backend server:
 
-1. Entrez votre date de naissance
-2. Sélectionnez l'unité temporelle souhaitée (jours, semaines, mois, années)
-3. Ajustez l'espérance de vie si nécessaire (basée sur les statistiques mondiales)
-4. Visualisez votre vie représentée par des points :
-   - Points bleus : temps écoulé
-   - Point rouge : aujourd'hui
-   - Point avec tête de mort : fin de vie estimée
+1. Clone this repository: `git clone https://github.com/nthnbch/dotlife.git`
+2. Open `index.html` in your browser for local testing
+3. To deploy, simply copy the files to your web server or static hosting
 
-Vos préférences (langue, thème) sont automatiquement sauvegardées dans votre navigateur.
+Compatibility: All modern browsers (Chrome, Firefox, Safari, Edge)
 
-## Personnalisation
+## How to Use
 
-DotLife est facile à personnaliser :
+1. Enter your date of birth
+2. Select the desired time unit (days, weeks, months, years)
+3. Adjust life expectancy if necessary (based on global statistics)
+4. Visualize your life represented by dots:
+   - Blue dots: elapsed time
+   - Red dot: today
+   - Skull dot: estimated end of life
 
-- Modifiez les couleurs dans `style.css` en ajustant les variables CSS
-- Ajoutez de nouvelles langues en complétant le dictionnaire dans `script.js`
-- Adaptez la mise en page en fonction de vos besoins
+Your preferences (language, theme) are automatically saved in your browser.
 
-## Technologies utilisées
+## Customization
+
+DotLife is easy to customize:
+
+- Modify colors in `style.css` by adjusting the CSS variables
+- Add new languages by completing the dictionary in `script.js`
+- Adapt the layout to your needs
+
+## Technologies Used
 
 - HTML5
 - CSS3
-- JavaScript (Vanilla)
-- LocalStorage pour la persistance des préférences
-- Conception responsive
-- Accessibilité intégrée pour les lecteurs d'écran
-
-## Crédit
-
-© [nathan.swiss](https://nathan.swiss)
+- JavaScript
